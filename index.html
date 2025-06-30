@@ -209,7 +209,7 @@ html, body {
 <body>
 
     <div id="passwordScreen" class="container">
-        <h1>Welcome to The Machine</h1>
+        <h1>Welcome to<br>The Machine</h1>
         <div class="input-group">
             <label for="password">Predicting Your Future Since 1999</label>
             <input type="password" id="password" placeholder="" autocomplete="current-password">
@@ -235,8 +235,7 @@ html, body {
         <h1 id=generatingProphecy>Generating Prophecy</h1>
         <p>Please wait<span id="cosmicDataStreams">, our algorithms are consulting the cosmic data streams.</span></p>
         <div class="spinner"></div>
-        <hr style="border: none;">
-        <hr style="border: none;">	    
+        <div class="white-gap"></div> 		
     </div>
 
     <div id="predictionContent" class="container">    
@@ -712,6 +711,7 @@ document.addEventListener('beforeunload', () => {
             if (enteredPasswordLower.startsWith('instructions')) {
                passwordScreen.style.display = 'none'; // Hide the password screen
                explanationScreen.style.display = 'flex'; // Show the loading screen (using flex for centering)		
+	       window.scrollTo({ top: 0, behavior: 'smooth' });
             }
 		
             // Check if the base password matches
@@ -753,12 +753,15 @@ document.addEventListener('beforeunload', () => {
             errorMessage.textContent = ''; // Clear any previous error
             passwordScreen.style.display = 'none'; // Hide the password screen
             loadingScreen.style.display = 'flex'; // Show the loading screen (using flex for centering)
+	    window.scrollTo({ top: 0, behavior: 'smooth' });
+            document.body.style.overflow = 'hidden';
 
             // Set a timeout to display the prediction content after a delay
             setTimeout(() => {
                 loadingScreen.style.display = 'none'; // Hide the loading screen
                 predictionContent.style.display = 'block'; // Show the prediction content
-
+	        window.scrollTo({ top: 0, behavior: 'smooth' });
+                document.body.style.overflow = '';
                 // Request a wake lock when the prediction page is shown
                 requestWakeLock();
 
