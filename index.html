@@ -9,6 +9,25 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>The Machine</title>
     <style>
+
+	    ::-webkit-scrollbar {
+    width: 0 !important; /* Hides vertical scrollbar by making its width zero */
+    height: 0 !important; /* Hides horizontal scrollbar by making its height zero */
+    display: none; /* Fallback for some specific cases or older versions */
+}
+
+/* For Firefox */
+/* This targets the element that would have the scrollbar (e.g., html or body) */
+html, body {
+    scrollbar-width: none; /* Hides the standard scrollbar in Firefox */
+}
+
+/* For Internet Explorer and Edge (older versions) */
+/* This also targets the element that would have the scrollbar */
+html, body {
+    -ms-overflow-style: none; /* Hides scrollbar in IE/Edge */
+}
+	    
         body {
             font-family: Arial, sans-serif;
             text-align: center;            
