@@ -711,7 +711,7 @@ document.addEventListener('beforeunload', () => {
             if (enteredPasswordLower.startsWith('instructions')) {
                passwordScreen.style.display = 'none'; // Hide the password screen
                explanationScreen.style.display = 'flex'; // Show the loading screen (using flex for centering)		
-	       window.scrollTo({ top: 0, behavior: 'smooth' });
+	       window.scrollTo({ top: 0, behavior: 'auto' });
             }
 		
             // Check if the base password matches
@@ -753,14 +753,14 @@ document.addEventListener('beforeunload', () => {
             errorMessage.textContent = ''; // Clear any previous error
             passwordScreen.style.display = 'none'; // Hide the password screen
             loadingScreen.style.display = 'flex'; // Show the loading screen (using flex for centering)
-	    window.scrollTo({ top: 0, behavior: 'smooth' });
+	    window.scrollTo({ top: 0, behavior: 'auto' });
             document.body.style.overflow = 'hidden';
 
             // Set a timeout to display the prediction content after a delay
             setTimeout(() => {
                 loadingScreen.style.display = 'none'; // Hide the loading screen
                 predictionContent.style.display = 'block'; // Show the prediction content
-	        window.scrollTo({ top: 0, behavior: 'smooth' });
+	        window.scrollTo({ top: 0, behavior: 'auto' });
                 document.body.style.overflow = '';
                 // Request a wake lock when the prediction page is shown
                 requestWakeLock();
