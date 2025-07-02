@@ -924,12 +924,13 @@ document.addEventListener('beforeunload', () => {
                     requestWakeLock();
                 }, 11*1000); // Use the defined delay
 	    }
-	    else { 
+	    else { // finger mode
 		const intervalId = setInterval(scanProgressFunction, 100);
 	    }
-	    loadingBar.style.visibility='hidden';
-	    loadingProgress.style.visibility='hidden';
-	    loadingWarning.style.visibility='hidden';   	
+	    loadingBar.style.visibility = 'hidden';
+	    loadingSpinner.style.visibility = 'hidden';
+	    loadingProgress.style.visibility = 'hidden';
+	    loadingWarning.style.visibility = 'hidden';   	
             // Request a wake lock when the prediction page is shown
             if ('wakeLock' in navigator) {
                 requestWakeLock();
