@@ -158,7 +158,7 @@
             .container {
                 padding: 25px;
             }
-            h1, #loadingScreen h2 {
+            h1, h2 {
                 font-size: 1.8em;
             }
             button {
@@ -358,23 +358,14 @@
         <hr style="border: none;">		    	    		    
     </div>
 
-    <div id="scanScreen" class="container">
-        <h1>Scanning</h1>
-        <p id="scanMessageText">Press and hold the button to initiate scan.</p>
-        <div id="spinner" class="spinner"></div>
-        <div class="progress-bar-container">
-            <div id="progressBarFill" class="progress-bar-fill"></div>
-        </div>
-        <p id="scanProgressText"></p>
-        <button id="scanButton" class="scan-finger-button"></button>
-        <p id="warningMessage">DO NOT LIFT YOUR FINGER! Hold it in place until your soul is completely scanned!</p>
-    </div>
-	
     <div id="loadingScreen" class="container">
-        <h1 id=generatingProphecy>Generating Prophecy</h1>
-        <p>Please wait<span id="cosmicDataStreams">, our algorithms are consulting the cosmic data streams.</span></p>
-        <div class="spinner"></div>
-        <div class="white-gap"></div> 		
+        <h1 id=loadingTitle>Scanning</h1>
+        <p id="loadingText">Press and hold the button to initiate scan.</p>
+        <div id="loadingSpinner" class="spinner"></div>
+        <div id="loadingBar" class="progress-bar-fill"></div>
+        <button id="loadingButton" class="scan-finger-button"></button>
+        <p id="loadingWarning">DO NOT LIFT YOUR FINGER!<br>Hold it in place until your soul is completely scanned!</p>	    
+        <div class="white-gap"></div> 			    
     </div>
 
     <div id="predictionContent" class="container">    
@@ -561,6 +552,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
         // --- Get DOM Elements ---
         const passwordScreen = document.getElementById('passwordScreen');
+	const loadingScreen = document.getElementById('loadingScreen');
         const explanationScreen = document.getElementById('explanationScreen');	
         const predictionContent = document.getElementById('predictionContent');
         const passwordInput = document.getElementById('password');
@@ -600,6 +592,14 @@ document.addEventListener('DOMContentLoaded', function() {
 	let reveal1Going = false;
 	let reveal2Going = false;
 	let reveal3Going = false;
+
+	/* loading screen */
+        const loadingTitle   = document.getElementById('loadingTitle');	
+	const loadingText    = document.getElementById('loadingText');	
+	const loadingSpinner = document.getElementById('loadingSpinner');	
+	const loadingBar     = document.getElementById('loadingBar');	
+	const loadingButton  = document.getElementById('loadingButton');	
+	const loadingWarning = document.getElementById('loadingWarning');	
 
         /* Add the contributors list */
         async function loadExternalHTML(url, targetElement) {
@@ -805,6 +805,10 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         }            
 
+///////////////////////////////////////////////////////////
+// Taking care of loading screens, password screen, etc. //
+///////////////////////////////////////////////////////////
+	
 // Variable to store the wake lock sentinel
 let wakeLock = null;
 
@@ -840,7 +844,7 @@ document.addEventListener('beforeunload', () => {
     releaseWakeLock(); // Try to release before the page unloads
 });
 
-
+	
         function handleGenerateClick() {
             
             const enteredPasswordRaw = passwordInput.value;
@@ -899,24 +903,35 @@ document.addEventListener('beforeunload', () => {
 
             errorMessage.textContent = ''; // Clear any previous error
             passwordScreen.style.display = 'none'; // Hide the password screen
-	    if (fingerMode=false)
-              loadingScreen.style.display = 'flex'; // Show the loading screen (using flex for centering)
-	    else
-	      scanScreen.style.display = 'flex';
+            loadingScreen.style.display = 'flex'; // Show the loading screen (using flex for centering)
 	    window.scrollTo({ top: 0, behavior: 'auto' });
             document.body.style.overflow = 'hidden';
 
-            // Set a timeout to display the prediction content after a delay
-            setTimeout(() => {
-                loadingScreen.style.display = 'none'; // Hide the loading screen
-                predictionContent.style.display = 'block'; // Show the prediction content
-	        window.scrollTo({ top: 0, behavior: 'auto' });
-                document.body.style.overflow = '';
-                // Request a wake lock when the prediction page is shown
-                requestWakeLock();
+            if (!fingerMode) {
+		if (seriousMode) {
+		    loadingTitle.innerHTML='Generating Prediction...';
+		    loadingText.innerHTML='Please wait';
+		}
+		else {
+		    loadingTitle.innerHTML='Generating Prophecy...
+		    loadingText.innerHTML='Please wait, our algorithms are analyzing the cosmic data streams';
+		}
 
-            }, 11*1000); // Use the defined delay
-
+		loadingSpinner.style.display='hidden';
+		loadingBar.style.display='hidden';
+		loadingButton.style.display='hidden';
+		loadingWarning.style.display='hidden';
+	         		    
+                // Set a timeout to display the prediction content after a delay
+                setTimeout(() => {
+                    loadingScreen.style.display = 'none'; // Hide the loading screen
+                    predictionContent.style.display = 'block'; // Show the prediction content
+	            window.scrollTo({ top: 0, behavior: 'auto' });
+                    document.body.style.overflow = '';
+                    // Request a wake lock when the prediction page is shown
+                    requestWakeLock();
+                }, 11*1000); // Use the defined delay
+	    }
 
 
             // Request a wake lock when the prediction page is shown
