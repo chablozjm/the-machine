@@ -417,6 +417,18 @@ html, body {
         <hr style="border: none;">		    	    		    
     </div>
 
+    <div id="scanScreen" class="container">
+        <h2>Scanning</h2>
+        <p id="scanMessageText">Press and hold the button to initiate scan.</p>
+        <div id="spinner" class="spinner"></div> <!-- Added ID for easier JS reference -->
+        <div class="progress-bar-container">
+            <div id="progressBarFill" class="progress-bar-fill"></div>
+        </div>
+        <p id="scanProgressText"></p>
+        <button id="scanButton" class="scan-finger-button"></button> <!-- Added class, removed text -->
+        <p id="warningMessage">DO NOT LIFT YOUR FINGER! Hold it in place until your soul is completely scanned!</p>
+    </div>
+	
     <div id="loadingScreen" class="container">
         <h1 id=generatingProphecy>Generating Prophecy</h1>
         <p>Please wait<span id="cosmicDataStreams">, our algorithms are consulting the cosmic data streams.</span></p>
