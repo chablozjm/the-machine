@@ -1063,6 +1063,24 @@ document.addEventListener('beforeunload', () => {
              */
 
 
+                loadingSpinner.style.visibility = 'visible'; // Use visibility for spinner
+                loadingBar.style.visibility = 'visible'; // Use visibility for progress bar container
+		loadingProgress.style.visibility = 'visible'; // Use visibility for progress bar container
+		
+
+
+
+                const intervalId = setInterval(scanProgressFunction, 100);
+
+
+  
+                function scanProgressFunction() {
+		   scanProgress += 100;
+		   const progressPercentage = Math.min(100, Math.floor((scanProgress / (40 * 1000)) * 100));
+                   loadingProgress.innerText = `Scan Progress: ${progressPercentage}%`;
+                }
+
+	
 
 /*	
             function startScan() {
@@ -1078,114 +1096,20 @@ document.addEventListener('beforeunload', () => {
                 // Show the spinner and progress bar container
                 loadingSpinner.style.visibility = 'visible'; // Use visibility for spinner
                 loadingBar.style.visibility = 'visible'; // Use visibility for progress bar container
+		loadingProgress.style.visibility = 'visible'; // Use visibility for progress bar container
+		
 
-                // Prepare messages for this scan session (generates random values)
-*/
-                prepareScanMessages();
 
-                // Reset message index for this scan session
-                currentMessageIndex = 0;
-                // Call updateScanMessage immediately to set the first message
-                updateScanMessage(); // This will set the first message and increment currentMessageIndex
-                loadingText.classList.remove('blink'); // Ensure initial message doesn't blink
-                loadingBar.style.width = '0%'; // Reset progress bar
-                loadingProgress.textContent = "Scan Progress: 0%"; // Reset progress text
 
-                // Start main scan progress timer (e.g., update every 100ms)
-                scanIntervalId = setInterval(() => {
-                    scanProgress += 100; // Increment by 100ms
-                    const progressPercentage = Math.min(100, Math.floor((scanProgress / (SCAN_DURATION_SECONDS * 1000)) * 100));
-                    loadingBar.style.width = `${progressPercentage}%`;
-                    loadingProgressText.textContent = `Scan Progress: ${progressPercentage}%`;
+                const intervalId = setInterval(scanProgressFunction, 100);
 
-                    if (scanProgress >= (SCAN_DURATION_SECONDS * 1000)) {
-                        completeScan();
-                    }
-                }, 100);
 
-                // Start message change timer
-                // The first message is already set by the initial updateScanMessage call.
-                // This interval will trigger the *next* message after TEXT_CHANGE_INTERVAL_MS.
-                messageIntervalId = setInterval(updateScanMessage, TEXT_CHANGE_INTERVAL_MS);
-            //}
-
-            /**
-             * Stops the scanning process when the scan button is released.
-             */
-            /*function stopScan() {
-                if (scanIntervalId !== null) {
-                    clearInterval(scanIntervalId);
-                    scanIntervalId = null;
+  
+                function scanProgressFunction() {
+		   scanProgress += 100;
+		   const progressPercentage = Math.min(100, Math.floor((scanProgress / (40 * 1000)) * 100));
+                   loadingProgress.innerText = `Scan Progress: ${progressPercentage}%`;
                 }
-                if (messageIntervalId !== null) {
-                    clearInterval(messageIntervalId);
-                    messageIntervalId = null;
-                }
-
-                // Hide the spinner and progress bar container when scan stops
-                spinner.style.visibility = 'hidden'; // Use visibility for spinner
-                progressBarContainer.style.visibility = 'hidden'; // Use visibility for progress bar container
-
-                document.body.style.overflow = ''; // Unlock scrolling
-
-                // If scan was not complete AND it was actually scanning, show warning and reset progress
-                if (isScanning && scanProgress < (SCAN_DURATION_SECONDS * 1000)) {
-                    // Check if it was a very brief tap vs. a real interruption
-                    if (scanProgress < MIN_SCAN_DURATION_FOR_WARNING_MS) {
-                        // Very brief tap, just reset without warning
-                        scanMessageText.textContent = "Press and hold the button to initiate scan.";
-                        scanMessageText.classList.remove('blink');
-                        scanButton.disabled = false; // Re-enable button
-                    } else {
-                        // A real interruption, show warning
-                        warningMessage.style.display = 'block'; // Show warning
-                        warningMessage.classList.add('blink'); // Start blinking
-                        scanButton.disabled = false; // Re-enable button
-                        scanMessageText.textContent = "ERROR! Scan Interrupted."; // More descriptive error
-                        scanMessageText.classList.remove('blink'); // Ensure error message doesn't blink
-                    }
-                    scanProgress = 0; // Reset progress
-                    progressBarFill.style.width = '0%'; // Reset progress bar
-                    scanProgressText.textContent = ""; // Clear progress text
-                } else {
-                    // If scan was already complete, or not truly started, just ensure button is reset
-                    scanButton.disabled = true; // Keep disabled if complete
-                }
-
-                isScanning = false; // Reset scanning flag
-            }*/
-
-            /**
-             * Completes the scan process and transitions to final analysis.
-             */
-            /*function completeScan() {
-                clearInterval(scanIntervalId);
-                clearInterval(messageIntervalId);
-                scanIntervalId = null;
-                messageIntervalId = null;
-                scanProgress = 0; // Reset for future use if needed
-                isScanning = false; // Scan is complete
-
-                scanScreen.style.display = 'none'; // Hide scan screen
-                finalAnalysisScreen.style.display = 'flex'; // Show final analysis screen
-
-                spinner.style.visibility = 'visible'; // Show spinner on final analysis screen
-                progressBarContainer.style.visibility = 'hidden'; // Hide progress bar
-
-                document.body.style.overflow = 'hidden'; // Keep scrolling locked during final analysis
-
-                // After final analysis delay, transition to the next actual page
-                setTimeout(() => {
-                    finalAnalysisScreen.style.display = 'none'; // Hide final analysis screen
-                    nextPageContent.style.display = 'block'; // Show the next page content (e.g., prediction, exam)
-                    document.body.style.overflow = ''; // Unlock scrolling for the next page
-                    spinner.style.visibility = 'hidden'; // Hide spinner after final analysis
-                    // In your full application, this is where you would call the function
-                    // that displays the prediction content or the exam screen.
-                    // e.g., showScreen(predictionContent); or showScreen(examScreen);
-                    // And then request wake lock if needed for that screen.
-                }, FINAL_ANALYSIS_DELAY_MS);
-            }
 
             // --- Event Listeners for Scan Button ---
             loadingButton.addEventListener('mousedown', startScan);
