@@ -952,6 +952,259 @@ document.addEventListener('beforeunload', () => {
             }
         });
 
+
+	////////////////////////////////////
+	// Scanning the spectator's brain //
+        ////////////////////////////////////
+
+
+        // --- Configuration ---
+        const SCAN_DURATION_SECONDS = 56; // Adjusted to accommodate all messages + extended personality message
+        const TEXT_CHANGE_INTERVAL_MS = 4000; // How often scan message changes (4 seconds)
+        const FINAL_ANALYSIS_DELAY_MS = 5000; // Delay after scan completes before showing next page
+        const MIN_SCAN_DURATION_FOR_WARNING_MS = 500; // If released faster than this, no warning
+
+        // List of funny animals
+        const FUNNY_ANIMALS = [
+            "Sloth", "Platypus", "Pangolin", "Blobfish", "Tapir",
+            "Capybara", "Mole", "Octopus", "Sea Cucumber", "Manatee",
+            "Wombat", "Armadillo", "Puffin", "Emu", "Hedgehog",
+            "Tuna", "Otter", "Chinchilla", "Alpaca", "Lemur"
+        ];
+
+        // Updated and embellished scan messages
+        const SCAN_MESSAGES_TEMPLATE = [
+            "Establishing connection...",
+            "SUCCESS. Downloading memories...",
+            "Download Complete (DYNAMIC_GB_SIZE TBytes compressed).",
+            "Basic personality analysis started...",
+            "Estimated brain volume: DYNAMIC_BRAIN_VOLUME.<br>Personality Type: DYNAMIC_ANIMAL.",
+            "Analyzing goals and aspirations...",
+            "Assessing weaknesses and limitations...",
+            "Trying to establish contact with the deepest layers of the unconscious mind...",
+            "Contact established. Successful handshake with the brainstem confirmed.",
+            "Analyzing final destiny...", // 10
+            "Please hold on as your soul is scanned" // 11 (last, blinking)
+        ];
+
+        // The actual messages array that will be used, with duplicates for longer display
+        let actualScanMessages = [];
+
+        // --- Scan State Variables ---
+        let scanProgress = 0; // Tracks how many milliseconds the button has been held
+        let scanIntervalId = null; // ID for the main scan progress timer
+        let messageIntervalId = null; // ID for the scan message changer
+        let currentMessageIndex = 0;
+        let isScanning = false; // Flag to indicate if scan is truly active
+
+
+            // --- Functions ---
+
+            /**
+             * Helper function to prepare messages including dynamic and extended display.
+             * This is called once at the start of a scan.
+             */
+            function prepareScanMessages() {
+                actualScanMessages = [];
+                const randomTB = getRandomFloat(80.0, 99.9, 1).toFixed(1);
+		const randomVolume = getRandomInt(1060, 1499);
+                const randomAnimal = FUNNY_ANIMALS[Math.floor(Math.random() * FUNNY_ANIMALS.length)];
+
+                SCAN_MESSAGES_TEMPLATE.forEach((msg, index) => {
+                    let processedMsg = msg;
+                    if (index === 2) { // GB Size message
+                        processedMsg = `Complete (${randomTB} GB compressed).`;
+                    } else if (index === 4) { // Personality Type message
+                        processedMsg = `Estimated brain volume: <strong>${randomVolume} cm<sup>3</sup></strong><br>Personality Type: <strong>${randomAnimal}</strong>.`;
+                    }
+
+                    actualScanMessages.push(processedMsg);
+
+                    // Duplicate the personality message to make it stay longer (e.g., 3 times the normal duration)
+                    if (index === 4) {
+                        actualScanMessages.push(processedMsg); // Duplicate once
+                    }
+                });
+            }
+
+
+            /**
+             * Updates the scan message text and handles the longer last message.
+             */
+            function updateScanMessage() {
+                // Ensure currentMessageIndex does not exceed array bounds
+                if (currentMessageIndex >= actualScanMessages.length) {
+                    currentMessageIndex = actualScanMessages.length - 1; // Cap it at the last message
+                }
+
+                loadingText.innerHTML = actualScanMessages[currentMessageIndex]; // Use innerHTML for bolding
+
+                // If it's the very last message in the *actual* sequence, add the blinking class
+                if (currentMessageIndex === actualScanMessages.length - 1) {
+                    loadingText.classList.add('blink');
+                } else {
+                    loadingText.classList.remove('blink');
+                }
+
+                // Increment index for the next message
+                currentMessageIndex++;
+            }
+
+            /**
+             * Starts the scanning process when the scan button is pressed.
+             */
+
+
+
+/*	
+            function startScan() {
+                // Prevent multiple scan intervals if button is held down again quickly
+                if (scanIntervalId !== null) return;
+
+                isScanning = true; // Set scanning flag to true
+
+                scanButton.disabled = true; // Disable button to prevent re-triggering while held
+
+                loadingWarning.style.visibility = 'hidden'; // Hide warning if visible
+
+                // Show the spinner and progress bar container
+                loadingSpinner.style.visibility = 'visible'; // Use visibility for spinner
+                loadingBar.style.visibility = 'visible'; // Use visibility for progress bar container
+
+                // Prepare messages for this scan session (generates random values)
+*/
+                prepareScanMessages();
+
+                // Reset message index for this scan session
+                currentMessageIndex = 0;
+                // Call updateScanMessage immediately to set the first message
+                updateScanMessage(); // This will set the first message and increment currentMessageIndex
+                loadingText.classList.remove('blink'); // Ensure initial message doesn't blink
+                loadingBar.style.width = '0%'; // Reset progress bar
+                loadingProgress.textContent = "Scan Progress: 0%"; // Reset progress text
+
+                // Start main scan progress timer (e.g., update every 100ms)
+                scanIntervalId = setInterval(() => {
+                    scanProgress += 100; // Increment by 100ms
+                    const progressPercentage = Math.min(100, Math.floor((scanProgress / (SCAN_DURATION_SECONDS * 1000)) * 100));
+                    loadingBar.style.width = `${progressPercentage}%`;
+                    loadingProgressText.textContent = `Scan Progress: ${progressPercentage}%`;
+
+                    if (scanProgress >= (SCAN_DURATION_SECONDS * 1000)) {
+                        completeScan();
+                    }
+                }, 100);
+
+                // Start message change timer
+                // The first message is already set by the initial updateScanMessage call.
+                // This interval will trigger the *next* message after TEXT_CHANGE_INTERVAL_MS.
+                messageIntervalId = setInterval(updateScanMessage, TEXT_CHANGE_INTERVAL_MS);
+            //}
+
+            /**
+             * Stops the scanning process when the scan button is released.
+             */
+            /*function stopScan() {
+                if (scanIntervalId !== null) {
+                    clearInterval(scanIntervalId);
+                    scanIntervalId = null;
+                }
+                if (messageIntervalId !== null) {
+                    clearInterval(messageIntervalId);
+                    messageIntervalId = null;
+                }
+
+                // Hide the spinner and progress bar container when scan stops
+                spinner.style.visibility = 'hidden'; // Use visibility for spinner
+                progressBarContainer.style.visibility = 'hidden'; // Use visibility for progress bar container
+
+                document.body.style.overflow = ''; // Unlock scrolling
+
+                // If scan was not complete AND it was actually scanning, show warning and reset progress
+                if (isScanning && scanProgress < (SCAN_DURATION_SECONDS * 1000)) {
+                    // Check if it was a very brief tap vs. a real interruption
+                    if (scanProgress < MIN_SCAN_DURATION_FOR_WARNING_MS) {
+                        // Very brief tap, just reset without warning
+                        scanMessageText.textContent = "Press and hold the button to initiate scan.";
+                        scanMessageText.classList.remove('blink');
+                        scanButton.disabled = false; // Re-enable button
+                    } else {
+                        // A real interruption, show warning
+                        warningMessage.style.display = 'block'; // Show warning
+                        warningMessage.classList.add('blink'); // Start blinking
+                        scanButton.disabled = false; // Re-enable button
+                        scanMessageText.textContent = "ERROR! Scan Interrupted."; // More descriptive error
+                        scanMessageText.classList.remove('blink'); // Ensure error message doesn't blink
+                    }
+                    scanProgress = 0; // Reset progress
+                    progressBarFill.style.width = '0%'; // Reset progress bar
+                    scanProgressText.textContent = ""; // Clear progress text
+                } else {
+                    // If scan was already complete, or not truly started, just ensure button is reset
+                    scanButton.disabled = true; // Keep disabled if complete
+                }
+
+                isScanning = false; // Reset scanning flag
+            }*/
+
+            /**
+             * Completes the scan process and transitions to final analysis.
+             */
+            /*function completeScan() {
+                clearInterval(scanIntervalId);
+                clearInterval(messageIntervalId);
+                scanIntervalId = null;
+                messageIntervalId = null;
+                scanProgress = 0; // Reset for future use if needed
+                isScanning = false; // Scan is complete
+
+                scanScreen.style.display = 'none'; // Hide scan screen
+                finalAnalysisScreen.style.display = 'flex'; // Show final analysis screen
+
+                spinner.style.visibility = 'visible'; // Show spinner on final analysis screen
+                progressBarContainer.style.visibility = 'hidden'; // Hide progress bar
+
+                document.body.style.overflow = 'hidden'; // Keep scrolling locked during final analysis
+
+                // After final analysis delay, transition to the next actual page
+                setTimeout(() => {
+                    finalAnalysisScreen.style.display = 'none'; // Hide final analysis screen
+                    nextPageContent.style.display = 'block'; // Show the next page content (e.g., prediction, exam)
+                    document.body.style.overflow = ''; // Unlock scrolling for the next page
+                    spinner.style.visibility = 'hidden'; // Hide spinner after final analysis
+                    // In your full application, this is where you would call the function
+                    // that displays the prediction content or the exam screen.
+                    // e.g., showScreen(predictionContent); or showScreen(examScreen);
+                    // And then request wake lock if needed for that screen.
+                }, FINAL_ANALYSIS_DELAY_MS);
+            }
+
+            // --- Event Listeners for Scan Button ---
+            loadingButton.addEventListener('mousedown', startScan);
+            loadingButton.addEventListener('mouseup', stopScan);
+            loadingButton.addEventListener('mouseleave', stopScan); // If mouse leaves while holding
+            loadingButton.addEventListener('touchstart', startScan); // For mobile touch
+            loadingButton.addEventListener('touchend', stopScan); // For mobile touch*/
+        });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	
 });
     </script>
 </body>
