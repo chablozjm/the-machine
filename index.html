@@ -109,7 +109,7 @@
 
         /* Styling for the loading screen */
         #loadingScreen {
-            /*display: none; /* Initially hidden */*/
+            display: none; /* Initially hidden */
             min-height: 200px;
             justify-content: center;
             align-items: center;
@@ -118,6 +118,7 @@
         }
 
 	#scanScreen {
+	    display: none; /* Initially hidden */
             min-height: 200px;
             justify-content: center;
             align-items: center;
@@ -845,6 +846,8 @@ document.addEventListener('beforeunload', () => {
             const enteredPasswordRaw = passwordInput.value;
             const enteredPasswordLower = enteredPasswordRaw.toLowerCase();
 
+	    let fingerMode = false;
+
 	    // Check if "instructions" was entered
             if (enteredPasswordLower.startsWith('instructions')) {
                passwordScreen.style.display = 'none'; // Hide the password screen
@@ -878,6 +881,12 @@ document.addEventListener('beforeunload', () => {
                 modifierString = modifierString.replace('i', ''); // Remove 'i' to easily find numbers
             }		
 
+	    // --- Parse for "Inverted Mode" (i) ---
+            if (modifierString.includes('f')) {
+                fingerMode=true;
+                modifierString = modifierString.replace('f', ''); // Remove 'f' to easily find numbers
+            }			
+
             // --- Parse for two-digit number (delay) ---
             const delayMatch = modifierString.match(/\d{2}/); // Regex to find exactly two digits
             if (delayMatch) {
@@ -890,7 +899,10 @@ document.addEventListener('beforeunload', () => {
 
             errorMessage.textContent = ''; // Clear any previous error
             passwordScreen.style.display = 'none'; // Hide the password screen
-            loadingScreen.style.display = 'flex'; // Show the loading screen (using flex for centering)
+	    if (fingerMode=false)
+              loadingScreen.style.display = 'flex'; // Show the loading screen (using flex for centering)
+	    else
+	      scanScreen.style.display = 'flex';
 	    window.scrollTo({ top: 0, behavior: 'auto' });
             document.body.style.overflow = 'hidden';
 
