@@ -203,6 +203,193 @@ html, body {
             border-radius: 5px;
             text-align: center;
         }
+
+
+    <style>
+        /* --- Scrollbar Hiding --- */
+        ::-webkit-scrollbar {
+            width: 0 !important;
+            height: 0 !important;
+            display: none;
+        }
+        html, body {
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+        }
+        body {
+            overflow-x: hidden;
+        }
+        /* --- End Scrollbar Hiding --- */
+
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+            background-color: #f0f0f0;
+            color: #333;
+            font-size: 1em; /* Base font size for body */
+            line-height: 1.6;
+
+            /* Centering the scan screen */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        /* Reusing .container for the scan screen's visual wrapper */
+        .container {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 40px;
+            background-color: #fff;
+            font-size: 1.25em; /* Scales text inside container relative to body's 1em (16px * 1.25 = 20px) */
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            border-radius: 15px;
+            text-align: center;
+            /* Ensure it's visible by default for this demo */
+            display: flex; /* Use flex for internal centering of scan elements */
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        h2 {
+            text-align: center;
+            color: #d76324;
+            margin-bottom: 25px;
+            font-size: 1.8em; /* Relative to container's font-size (1.8 * 20px = 36px) */
+        }
+
+        p {
+            margin-bottom: 1em;
+            line-height: 1.6;
+            font-size: 1.1em; /* Relative to container's font-size (1.1 * 20px = 22px) */
+            color: #555;
+        }
+
+        .scan-finger-button {
+            width: 100px; /* Fixed width for a perfect circle */
+            height: 100px; /* Fixed height for a perfect circle */
+            border-radius: 50%; /* Makes it round */
+            padding: 0; /* Remove padding as there's no text */
+            display: flex; /* Use flex to center any potential icon/inner elements */
+            justify-content: center;
+            align-items: center;
+            font-size: 0; /* Hide any default text if present */
+            background-color: #e0e0e0; /* Grey background */
+            border: 5px solid #d76324; /* Orange border */
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2); /* Soft shadow */
+        }
+
+        .scan-finger-button:hover {
+            background-color: #d0d0d0; /* Slightly darker grey on hover */
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .scan-finger-button:active {
+            transform: translateY(0);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Scan progress text */
+        #scanProgressText {
+            margin-top: 15px;
+            font-weight: bold;
+            color: #d76324;
+        }
+
+        /* Progress bar styling */
+        .progress-bar-container {
+            width: 80%;
+            background-color: #e0e0e0;
+            border-radius: 5px;
+            overflow: hidden;
+            margin-top: 20px;
+            height: 20px;
+            display: none; /* Hidden by default */
+        }
+
+        .progress-bar-fill {
+            height: 100%;
+            width: 0%; /* Initial width */
+            background-color: #d76324;
+            border-radius: 5px;
+            transition: width 0.1s linear; /* Smooth transition for progress */
+        }
+
+        /* Warning message styling */
+        #warningMessage {
+            color: #dc3545; /* Red color for warning */
+            font-weight: bold;
+            font-size: 1.2em;
+            margin-top: 20px;
+            display: none; /* Hidden by default */
+        }
+
+        /* Blinking class for messages */
+        .blink {
+            animation: blink 0.8s infinite alternate;
+        }
+
+        @keyframes blink {
+            0% { opacity: 1; }
+            100% { opacity: 0.3; }
+        }
+
+
+
+        /* Responsive adjustments */
+        @media (max-width: 600px) {
+            .container {
+                padding: 25px;
+                font-size: 1.1em; /* Slightly smaller base for container on mobile */
+            }
+            h2 {
+                font-size: 1.6em; /* Adjust heading size */
+            }
+            p {
+                font-size: 1em; /* Adjust paragraph size */
+            }
+            button { /* General button styling */
+                padding: 12px 20px;
+                font-size: 1.2em;
+            }
+            .scan-finger-button { /* Specific scan button styling on mobile */
+                width: 80px;
+                height: 80px;
+            }
+            .spinner {
+                width: 40px;
+                height: 40px;
+                border-width: 6px;
+            }
+            .progress-bar-container {
+                width: 90%; /* Wider on smaller screens */
+            }
+        }
+    </style>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	    
     </style>
 </head>
 <body>
