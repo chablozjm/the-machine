@@ -301,9 +301,6 @@
                 width: 80px;
                 height: 80px;
             }
-            .progress-bar-container {
-                width: 90%; /* Wider on smaller screens */
-            }
         }
     </style>
 
@@ -352,7 +349,9 @@
         <h1 id=loadingTitle>Scanning</h1>
         <p id="loadingText">Press and hold the button to initiate scan.</p>
         <div id="loadingSpinner" class="spinner"></div>
-        <div id="loadingBar" class="progress-bar-fill"></div>
+	<div id="loadingBarContainer" class="progress-bar-container">    
+            <div id="loadingBar" class="progress-bar-fill"></div>
+        </div>
 	<p id="loadingProgress">Scan Progress: 0%</p>
         <button id="loadingButton" class="scan-finger-button"></button>
         <p id="loadingWarning">DO NOT LIFT YOUR FINGER!<br>Hold it in place until your soul is completely scanned!</p>	    
@@ -585,15 +584,16 @@ document.addEventListener('DOMContentLoaded', function() {
 	let reveal3Going = false;
 
 	/* loading screen */
-        const loadingTitle    = document.getElementById('loadingTitle');	
-	const loadingText     = document.getElementById('loadingText');	
-	const loadingSpinner  = document.getElementById('loadingSpinner');	
-	const loadingBar      = document.getElementById('loadingBar');	
-	const loadingProgress = document.getElementById('loadingProgress');
-	const loadingButton   = document.getElementById('loadingButton');	
-	const loadingWarning  = document.getElementById('loadingWarning');
-	let   scanGoing       = false;
-	let   scanStarted     = false;
+        const loadingTitle        = document.getElementById('loadingTitle');	
+	const loadingText         = document.getElementById('loadingText');	
+	const loadingSpinner      = document.getElementById('loadingSpinner');
+	const loadingBarContainer = document.getElementById('loadingBarContainer');	
+	const loadingBar          = document.getElementById('loadingBar');	
+	const loadingProgress     = document.getElementById('loadingProgress');
+	const loadingButton       = document.getElementById('loadingButton');	
+	const loadingWarning      = document.getElementById('loadingWarning');
+	let   scanGoing           = false;
+	let   scanStarted         = false;
 
         /* Add the contributors list */
         async function loadExternalHTML(url, targetElement) {
@@ -925,10 +925,11 @@ document.addEventListener('beforeunload', () => {
 	    else { // finger mode
 		const intervalId = setInterval(scanProgressFunction, 100);
 	    }
-	    loadingBar.style.visibility = 'hidden';
-	    loadingSpinner.style.visibility = 'hidden';
+	    loadingBarContainer.visibility   = 'hidden';
+	    loadingBar.style.visibility      = 'hidden';
+	    loadingSpinner.style.visibility  = 'hidden';
 	    loadingProgress.style.visibility = 'hidden';
-	    loadingWarning.style.visibility = 'hidden';   	
+	    loadingWarning.style.visibility  = 'hidden';   	
             // Request a wake lock when the prediction page is shown
             if ('wakeLock' in navigator) {
                 requestWakeLock();
@@ -1074,10 +1075,11 @@ document.addEventListener('beforeunload', () => {
 		scanGoing=true;		    
 		scanStarted=true;
 		console.log('button down');
-		loadingSpinner.style.visibility = 'visible';
-                loadingBar.style.visibility = 'visible';
-		loadingProgress.style.visibility = 'visible';
-		loadingWarning.style.visibility = 'hidden';
+		loadingSpinner.style.visibility     = 'visible';
+		ladingBarContainer.style.visibility = 'visible';
+                loadingBar.style.visibility         = 'visible';
+		loadingProgress.style.visibility    = 'visible';
+		loadingWarning.style.visibility     = 'hidden';
 	    }
 
 	    function scanButtonUp() {
@@ -1110,6 +1112,7 @@ document.addEventListener('beforeunload', () => {
 
                 // Show the spinner and progress bar container
                 loadingSpinner.style.visibility = 'visible'; // Use visibility for spinner
+		loadingBarContainer.style.visibility = 'visible';
                 loadingBar.style.visibility = 'visible'; // Use visibility for progress bar container
 		loadingProgress.style.visibility = 'visible'; // Use visibility for progress bar container
 		
