@@ -923,13 +923,14 @@ document.addEventListener('beforeunload', () => {
                 }, 11*1000); // Use the defined delay
 	    }
 	    else { // finger mode
+		loadingTitle.innerHTML='Scanning';	    
 		const intervalId = setInterval(scanProgressFunction, 100);
 	    }
-	    loadingBarContainer.visibility   = 'hidden';
-	    loadingBar.style.visibility      = 'hidden';
-	    loadingSpinner.style.visibility  = 'hidden';
-	    loadingProgress.style.visibility = 'hidden';
-	    loadingWarning.style.visibility  = 'hidden';   	
+	    loadingBarContainer.style.visibility   = 'hidden';
+	    loadingBar.style.visibility            = 'hidden';
+	    loadingSpinner.style.visibility        = 'hidden';
+	    loadingProgress.style.visibility       = 'hidden';
+	    loadingWarning.style.visibility        = 'hidden';   	
             // Request a wake lock when the prediction page is shown
             if ('wakeLock' in navigator) {
                 requestWakeLock();
@@ -1075,11 +1076,11 @@ document.addEventListener('beforeunload', () => {
 		scanGoing=true;		    
 		scanStarted=true;
 		console.log('button down');
-		loadingSpinner.style.visibility     = 'visible';
+		loadingSpinner.style.visibility      = 'visible';
 		loadingBarContainer.style.visibility = 'visible';
-                loadingBar.style.visibility         = 'visible';
-		loadingProgress.style.visibility    = 'visible';
-		loadingWarning.style.visibility     = 'hidden';
+                loadingBar.style.visibility          = 'visible';
+		loadingProgress.style.visibility     = 'visible';
+		loadingWarning.style.visibility      = 'hidden';
 	    }
 
 	    function scanButtonUp() {
