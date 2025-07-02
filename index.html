@@ -602,7 +602,9 @@ document.addEventListener('DOMContentLoaded', function() {
 	const loadingBar      = document.getElementById('loadingBar');	
 	const loadingProgress = document.getElementById('loadingProgress');
 	const loadingButton   = document.getElementById('loadingButton');	
-	const loadingWarning  = document.getElementById('loadingWarning');	
+	const loadingWarning  = document.getElementById('loadingWarning');
+	let   scanGoing       = false;
+	let   scanStarted     = false;
 
         /* Add the contributors list */
         async function loadExternalHTML(url, targetElement) {
