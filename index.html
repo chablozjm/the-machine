@@ -117,15 +117,6 @@
             gap: 20px;
         }
 
-	#scanScreen {
-	    display: none; /* Initially hidden */
-            min-height: 200px;
-            justify-content: center;
-            align-items: center;
-            flex-direction: column;
-            gap: 20px;
-        }
-
         /* Styling for the explanation screen */
         #explanationScreen {
             display: none; /* Initially hidden */
@@ -1055,7 +1046,7 @@ document.addEventListener('beforeunload', () => {
 	
             loadingButton.addEventListener('mousedown', scanButtonDown);
             loadingButton.addEventListener('mouseup', scanButtonUp);
-            loadingButton.addEventListener('mouseleave', scanButtonDown); // If mouse leaves while holding
+            loadingButton.addEventListener('mouseleave', scanButtonUp); // If mouse leaves while holding
             loadingButton.addEventListener('touchstart', scanButtonUp); // For mobile touch
             loadingButton.addEventListener('touchend', scanButtonUp); // For mobile touch
 
