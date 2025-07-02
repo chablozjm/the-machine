@@ -270,6 +270,12 @@
             transition: width 0.1s linear; /* Smooth transition for progress */
         }
 
+        #scanProgressText {
+            margin-top: 15px;
+            font-weight: bold;
+            color: #d76324;
+        }
+	    
         /* Warning message styling */
         #warningMessage {
             color: #dc3545; /* Red color for warning */
@@ -363,6 +369,7 @@
         <p id="loadingText">Press and hold the button to initiate scan.</p>
         <div id="loadingSpinner" class="spinner"></div>
         <div id="loadingBar" class="progress-bar-fill"></div>
+	<p id="scanProgressText"></p>
         <button id="loadingButton" class="scan-finger-button"></button>
         <p id="loadingWarning">DO NOT LIFT YOUR FINGER!<br>Hold it in place until your soul is completely scanned!</p>	    
         <div class="white-gap"></div> 			    
