@@ -918,10 +918,10 @@ document.addEventListener('beforeunload', () => {
 		    loadingText.innerHTML='Please wait, our algorithms are analyzing the cosmic data streams';
 		}
 
-		loadingSpinner.style.display='hidden';
-		loadingBar.style.display='hidden';
-		loadingButton.style.display='hidden';
-		loadingWarning.style.display='hidden';
+		loadingSpinner.style.visibility='hidden';
+		loadingBar.style.visibility='hidden';
+		loadingButton.style.visibility='hidden';
+		loadingWarning.style.visibility='hidden';
 	         		    
                 // Set a timeout to display the prediction content after a delay
                 setTimeout(() => {
