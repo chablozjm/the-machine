@@ -913,12 +913,7 @@ document.addEventListener('beforeunload', () => {
                     loadingTitle.innerHTML='Generating Prophecy...';	
 		    loadingText.innerHTML='Please wait, our algorithms are analyzing the cosmic data streams';
 		}
-
-		loadingBar.style.visibility='hidden';
-		loadingProgress.style.visibility='hidden';
-		loadingButton.style.visibility='hidden';
-		loadingWarning.style.visibility='hidden';
-	         		    
+	        loadingButton.style.visibility='hidden';	         		    
                 // Set a timeout to display the prediction content after a delay
                 setTimeout(() => {
                     loadingScreen.style.display = 'none'; // Hide the loading screen
@@ -929,9 +924,12 @@ document.addEventListener('beforeunload', () => {
                     requestWakeLock();
                 }, 11*1000); // Use the defined delay
 	    }
-	    else {
+	    else { 
 		const intervalId = setInterval(scanProgressFunction, 100);
 	    }
+	    loadingBar.style.visibility='hidden';
+	    loadingProgress.style.visibility='hidden';
+	    loadingWarning.style.visibility='hidden';   	
             // Request a wake lock when the prediction page is shown
             if ('wakeLock' in navigator) {
                 requestWakeLock();
