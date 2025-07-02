@@ -7,7 +7,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>The Machine 2</title>
+    <title>The Machine</title>
 
 	
     <style>
@@ -1074,6 +1074,7 @@ document.addEventListener('beforeunload', () => {
             function scanButtonDown() {
 		scanGoing=true;		    
 		scanStarted=true;
+		console.log('button down');
 		loadingSpinner.style.visibility = 'visible';
                 loadingBar.style.visibility = 'visible';
 		loadingProgress.style.visibility = 'visible';
@@ -1082,6 +1083,7 @@ document.addEventListener('beforeunload', () => {
 
 	    function scanButtonUp() {
  		scanGoing=false;
+		console.log('button up');
 		if (scanStarted)
 		    loadingWarning.style.visibility = 'visible';
 	    }
