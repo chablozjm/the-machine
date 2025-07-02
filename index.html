@@ -108,7 +108,16 @@
         }
 
         /* Styling for the loading screen */
-        #loadingScreen, #scanscreen {
+        #loadingScreen {
+            display: none; /* Initially hidden */
+            min-height: 200px;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+	#scanScreen {
             display: none; /* Initially hidden */
             min-height: 200px;
             justify-content: center;
@@ -302,11 +311,6 @@
                 width: 80px;
                 height: 80px;
             }
-            .spinner {
-                width: 40px;
-                height: 40px;
-                border-width: 6px;
-            }
             .progress-bar-container {
                 width: 90%; /* Wider on smaller screens */
             }
@@ -357,7 +361,7 @@
     <div id="scanScreen" class="container">
         <h1>Scanning</h1>
         <p id="scanMessageText">Press and hold the button to initiate scan.</p>
-        <div id="spinner" class="spinner"></div> <!-- Added ID for easier JS reference -->
+        <div id="spinner" class="spinner"></div>
         <div class="progress-bar-container">
             <div id="progressBarFill" class="progress-bar-fill"></div>
         </div>
