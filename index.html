@@ -601,12 +601,13 @@ document.addEventListener('DOMContentLoaded', function() {
 	let reveal3Going = false;
 
 	/* loading screen */
-        const loadingTitle   = document.getElementById('loadingTitle');	
-	const loadingText    = document.getElementById('loadingText');	
-	const loadingSpinner = document.getElementById('loadingSpinner');	
-	const loadingBar     = document.getElementById('loadingBar');	
-	const loadingButton  = document.getElementById('loadingButton');	
-	const loadingWarning = document.getElementById('loadingWarning');	
+        const loadingTitle    = document.getElementById('loadingTitle');	
+	const loadingText     = document.getElementById('loadingText');	
+	const loadingSpinner  = document.getElementById('loadingSpinner');	
+	const loadingBar      = document.getElementById('loadingBar');	
+	const loadingProgress = document.getElementById('loadingProgress');
+	const loadingButton   = document.getElementById('loadingButton');	
+	const loadingWarning  = document.getElementById('loadingWarning');	
 
         /* Add the contributors list */
         async function loadExternalHTML(url, targetElement) {
