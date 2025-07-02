@@ -269,12 +269,6 @@
             border-radius: 5px;
             transition: width 0.1s linear; /* Smooth transition for progress */
         }
-
-        #scanProgressText {
-            margin-top: 15px;
-            font-weight: bold;
-            color: #d76324;
-        }
 	    
         /* Warning message styling */
         #warningMessage {
@@ -369,7 +363,7 @@
         <p id="loadingText">Press and hold the button to initiate scan.</p>
         <div id="loadingSpinner" class="spinner"></div>
         <div id="loadingBar" class="progress-bar-fill"></div>
-	<p id="loadingProgress"></p>
+	<p id="loadingProgress">Scan Progress: 0%</p>
         <button id="loadingButton" class="scan-finger-button"></button>
         <p id="loadingWarning">DO NOT LIFT YOUR FINGER!<br>Hold it in place until your soul is completely scanned!</p>	    
         <div class="white-gap"></div> 			    
@@ -941,8 +935,14 @@ document.addEventListener('beforeunload', () => {
                     requestWakeLock();
                 }, 11*1000); // Use the defined delay
 	    }
+	    else {
+	        loadingSpinner.style.visibility = 'visible';
+                loadingBar.style.visibility = 'visible';
+		loadingProgress.style.visibility = 'visible';
 
+		const intervalId = setInterval(scanProgressFunction, 100);
 
+	    }
             // Request a wake lock when the prediction page is shown
             if ('wakeLock' in navigator) {
                 requestWakeLock();
@@ -962,6 +962,17 @@ document.addEventListener('beforeunload', () => {
         });
 
 
+                
+
+
+  
+                function scanProgressFunction() {
+		   scanProgress += 100;
+		   const progressPercentage = Math.min(100, Math.floor((scanProgress / (40 * 1000)) * 100));
+                   loadingProgress.innerText = `Scan Progress: ${progressPercentage}%`;
+                }
+
+	
 	////////////////////////////////////
 	// Scanning the spectator's brain //
         ////////////////////////////////////
@@ -1064,9 +1075,7 @@ document.addEventListener('beforeunload', () => {
              */
 
 
-                loadingSpinner.style.visibility = 'visible'; // Use visibility for spinner
-                loadingBar.style.visibility = 'visible'; // Use visibility for progress bar container
-		loadingProgress.style.visibility = 'visible'; // Use visibility for progress bar container
+
 		
 
 
