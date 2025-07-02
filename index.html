@@ -851,6 +851,7 @@ document.addEventListener('beforeunload', () => {
             const enteredPasswordLower = enteredPasswordRaw.toLowerCase();
 
 	    let fingerMode = false;
+	    let seriousMode = false;
 
 	    // Check if "instructions" was entered
             if (enteredPasswordLower.startsWith('instructions')) {
