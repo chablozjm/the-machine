@@ -266,7 +266,7 @@
             font-weight: bold;
             font-size: 1.2em;
             margin-top: 20px;
-            display: none; /* Hidden by default */
+            visibility: none; /* Hidden by default */
         }
 
         /* Blinking class for messages */
@@ -930,12 +930,7 @@ document.addEventListener('beforeunload', () => {
                 }, 11*1000); // Use the defined delay
 	    }
 	    else {
-	        loadingSpinner.style.visibility = 'visible';
-                loadingBar.style.visibility = 'visible';
-		loadingProgress.style.visibility = 'visible';
-
 		const intervalId = setInterval(scanProgressFunction, 100);
-
 	    }
             // Request a wake lock when the prediction page is shown
             if ('wakeLock' in navigator) {
@@ -1079,8 +1074,11 @@ document.addEventListener('beforeunload', () => {
              */
 
             function scanButtonDown() {
-		    scanGoing=true;		    
-		    scanStarted=true;
+		scanGoing=true;		    
+		scanStarted=true;
+		loadingSpinner.style.visibility = 'visible';
+                loadingBar.style.visibility = 'visible';
+		loadingProgress.style.visibility = 'visible';
 	    }
 
 	    function scanButtonUp() {
