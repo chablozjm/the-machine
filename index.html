@@ -8,44 +8,45 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>The Machine</title>
+
+	
     <style>
+	::-webkit-scrollbar {
+            width: 0 !important; /* Hides vertical scrollbar by making its width zero */
+            height: 0 !important; /* Hides horizontal scrollbar by making its height zero */
+            display: none; /* Fallback for some specific cases or older versions */
+        }
 
-	    ::-webkit-scrollbar {
-    width: 0 !important; /* Hides vertical scrollbar by making its width zero */
-    height: 0 !important; /* Hides horizontal scrollbar by making its height zero */
-    display: none; /* Fallback for some specific cases or older versions */
-}
-
-/* For Firefox */
-/* This targets the element that would have the scrollbar (e.g., html or body) */
-html, body {
-    scrollbar-width: none; /* Hides the standard scrollbar in Firefox */
-}
+    /* For Firefox */
+    html, body {
+        scrollbar-width: none; /* Hides the standard scrollbar in Firefox */
+    }
 
 /* For Internet Explorer and Edge (older versions) */
-/* This also targets the element that would have the scrollbar */
-html, body {
-    -ms-overflow-style: none; /* Hides scrollbar in IE/Edge */
-}
+    html, body {
+        -ms-overflow-style: none; /* Hides scrollbar in IE/Edge */
+    }
 	    
-        body {
-            font-family: Arial, sans-serif;
-            text-align: center;            
-            margin: 0;
-            padding: 0;
-            background-color: #f0f0f0;
-            color: #333;
-            font-size: 1em;
-            line-height: 1.6;
-        }
-        .container {
-            max-width: 800px;
-            margin: 0px auto;
-            padding: 20px;
-            background-color: #fff;
-            font-size: 1.25em;
-            box-shadow: 0 0 10px rgba(0,0,0,0.1);
-        }
+    body {
+        font-family: Arial, sans-serif;
+        text-align: center;            
+        margin: 0;
+        padding: 0;
+        background-color: #f0f0f0;
+        color: #333;
+        font-size: 1em;
+        line-height: 1.6;
+    }
+	    
+    .container {
+        max-width: 800px;
+        margin: 0px auto;
+        padding: 20px;
+        background-color: #fff;
+        font-size: 1.25em;
+        box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+	    
         #predictionContent {
             display: none; /* Initially hidden */
         }
@@ -202,71 +203,6 @@ html, body {
             font-size: 1em;
             border-radius: 5px;
             text-align: center;
-        }
-
-
-    <style>
-        /* --- Scrollbar Hiding --- */
-        ::-webkit-scrollbar {
-            width: 0 !important;
-            height: 0 !important;
-            display: none;
-        }
-        html, body {
-            scrollbar-width: none;
-            -ms-overflow-style: none;
-        }
-        body {
-            overflow-x: hidden;
-        }
-        /* --- End Scrollbar Hiding --- */
-
-        body {
-            font-family: Arial, sans-serif;
-            text-align: center;
-            margin: 0;
-            padding: 0;
-            background-color: #f0f0f0;
-            color: #333;
-            font-size: 1em; /* Base font size for body */
-            line-height: 1.6;
-
-            /* Centering the scan screen */
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-        }
-
-        /* Reusing .container for the scan screen's visual wrapper */
-        .container {
-            max-width: 800px;
-            margin: 20px auto;
-            padding: 40px;
-            background-color: #fff;
-            font-size: 1.25em; /* Scales text inside container relative to body's 1em (16px * 1.25 = 20px) */
-            box-shadow: 0 0 10px rgba(0,0,0,0.1);
-            border-radius: 15px;
-            text-align: center;
-            /* Ensure it's visible by default for this demo */
-            display: flex; /* Use flex for internal centering of scan elements */
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-        }
-
-        h2 {
-            text-align: center;
-            color: #d76324;
-            margin-bottom: 25px;
-            font-size: 1.8em; /* Relative to container's font-size (1.8 * 20px = 36px) */
-        }
-
-        p {
-            margin-bottom: 1em;
-            line-height: 1.6;
-            font-size: 1.1em; /* Relative to container's font-size (1.1 * 20px = 22px) */
-            color: #555;
         }
 
         .scan-finger-button {
