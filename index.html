@@ -1049,6 +1049,16 @@ document.addEventListener('beforeunload', () => {
             }
 
 
+
+	
+            loadingButton.addEventListener('mousedown', scanButtonDown);
+            loadingButton.addEventListener('mouseup', scanButtonUp);
+            loadingButton.addEventListener('mouseleave', scanButtonDown); // If mouse leaves while holding
+            loadingButton.addEventListener('touchstart', scanButtonUp); // For mobile touch
+            loadingButton.addEventListener('touchend', scanButtonUp); // For mobile touch
+
+	
+
             /**
              * Updates the scan message text and handles the longer last message.
              */
@@ -1075,21 +1085,22 @@ document.addEventListener('beforeunload', () => {
              * Starts the scanning process when the scan button is pressed.
              */
 
+            function scanButtonDown() {
+		    scanGoing=true;		    
+		    scanStarted=true;
+	    }
+
+	    function scanButtonUp() {
+ 		scanGoing=false;
+	    }
 
 
-		
-
-
-
-                const intervalId = setInterval(scanProgressFunction, 100);
-
-
-  
-                function scanProgressFunction() {
-		   scanProgress += 100;
-		   const progressPercentage = Math.min(100, Math.floor((scanProgress / (40 * 1000)) * 100));
-                   loadingProgress.innerText = `Scan Progress: ${progressPercentage}%`;
-                }
+            function scanProgressFunction() {
+    	        if(scanGoing)
+		    scanProgress += 100;
+		const progressPercentage = Math.min(100, Math.floor((scanProgress / (40 * 1000)) * 100));
+                loadingProgress.innerText = `Scan Progress: ${progressPercentage}%`;
+            }
 
 	
 
@@ -1122,7 +1133,7 @@ document.addEventListener('beforeunload', () => {
                    loadingProgress.innerText = `Scan Progress: ${progressPercentage}%`;
                 }
 
-            // --- Event Listeners for Scan Button ---
+
             loadingButton.addEventListener('mousedown', startScan);
             loadingButton.addEventListener('mouseup', stopScan);
             loadingButton.addEventListener('mouseleave', stopScan); // If mouse leaves while holding
