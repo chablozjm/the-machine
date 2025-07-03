@@ -1088,7 +1088,7 @@ document.addEventListener('beforeunload', () => {
             // Optional: Change background color based on progress for a subtle visual effect
             if (loadingProgress < 33) {
                 loadingBar.style.backgroundColor = '#6366F1'; // Indigo 500
-            } else if (progress < 66) {
+            } else if (loadingProgress < 66) {
                 loadingBar.style.backgroundColor = '#4F46E5'; // Indigo 600
             } else {
                 loadingBar.style.backgroundColor = '#4338CA'; // Indigo 700
