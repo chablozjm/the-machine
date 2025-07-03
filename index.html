@@ -978,11 +978,11 @@ document.addEventListener('beforeunload', () => {
 
             if (!fingerMode) {
 		if (seriousMode) {
-		    loadingTitle.innerHTML='Generating Prediction...';
+		    loadingTitle.innerHTML='Generating Prediction';
 		    loadingText.innerHTML='Please wait';
 		}
 		else {
-                    loadingTitle.innerHTML='Generating Prophecy...';	
+                    loadingTitle.innerHTML='Generating Prophecy';	
 		    loadingText.innerHTML='Please wait, our algorithms are analyzing the cosmic data streams';
 		}
 	        loadingButton.style.visibility='hidden';
@@ -1070,7 +1070,7 @@ document.addEventListener('beforeunload', () => {
         function loadingUpdateProgressBar() {
             // Set the width of the progress bar fill element
             loadingBar.style.width = `${loadingProgress}%`;
-	    loadingProgressText.textContent = `Progress: ${Math.round(loadingProgress)}%`;
+	    loadingProgressText.textContent = `Scan Progress: ${Math.round(loadingProgress)}%`;
         }
 
         /**
