@@ -1071,6 +1071,12 @@ document.addEventListener('beforeunload', () => {
             // Set the width of the progress bar fill element
             loadingBar.style.width = `${loadingProgress}%`;
 	    loadingProgressText.textContent = `Scan Progress: ${Math.round(loadingProgress)}%`;
+	    if (loadingProgress==0)
+		loadingText.textContent = `Establishing connection...`;
+	    if (loadingProgress==10)
+		loadingText.textContent = `SUCESS. Downloading Memories...`;	
+            if (loadingProgress==20)
+		loadingText.textContent = `Download complete ( $(getRandomFloat(80.0, 99.9, 1).toFixed(1)) TBytes compressed)`;			
         }
 
         /**
