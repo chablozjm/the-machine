@@ -1079,7 +1079,7 @@ document.addEventListener('beforeunload', () => {
         let isScanning = false; // Flag to indicate if scan is truly active
 
 
-        function updateProgressBar() {
+        function loadingUpdateProgressBar() {
             // Set the width of the progress bar fill element
             loadingBar.style.width = `${loadingProgress}%`;
             // Update the text content to show the current percentage, rounded
@@ -1166,7 +1166,7 @@ document.addEventListener('beforeunload', () => {
         loadingButton.addEventListener('touchcancel', loadingStopProgress);
 
         // Initialize the progress bar state when the page finishes loading
-        document.addEventListener('DOMContentLoaded', updateProgressBar);
+        document.addEventListener('DOMContentLoaded', loadingUpdateProgressBar);
 
 	
 
