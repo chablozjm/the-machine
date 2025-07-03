@@ -1033,12 +1033,7 @@ document.addEventListener('beforeunload', () => {
 
 
 
-	
-            loadingButton.addEventListener('mousedown', scanButtonDown);
-            loadingButton.addEventListener('mouseup', scanButtonUp);
-            loadingButton.addEventListener('mouseleave', scanButtonUp); // If mouse leaves while holding
-            loadingButton.addEventListener('touchstart', scanButtonUp); // For mobile touch
-            loadingButton.addEventListener('touchend', scanButtonUp); // For mobile touch
+
 
 	
 
@@ -1067,16 +1062,6 @@ document.addEventListener('beforeunload', () => {
             /**
              * Starts the scanning process when the scan button is pressed.
              */
-
-            function scanButtonDown() {
-		scanGoing=true;		    
-		scanStarted=true;
-		console.log('button down');
-		loadingSpinner.style.visibility      = 'visible';
-		loadingBarContainer.style.visibility = 'visible';
-                loadingBar.style.visibility          = 'visible';
-		loadingProgress.style.visibility     = 'visible';
-	    }
 
 
 
