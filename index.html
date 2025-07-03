@@ -312,7 +312,7 @@
             max-width: 200px; /* Max width for desktop screens */
             max-height: 200px; /* Max height for desktop screens */
             border-radius: 50%; /* Make it perfectly round */
-            background-color: #4F46E5; /* Indigo 600 from Tailwind palette */
+            background-color: #d76324; /* Indigo 600 from Tailwind palette */
             color: white; /* White text color */
             cursor: pointer; /* Indicate it's clickable */
             transition: background-color 0.2s ease-in-out, transform 0.1s ease-in-out, border-color 0.2s ease-in-out; /* Smooth transitions for hover/active states and border color */
@@ -327,7 +327,7 @@
 
         /* Styles for the button when it's active (pressed) */
         .round-button:active {
-            background-color: #4338CA; /* Darker indigo when pressed */
+            background-color: #b74304; /* Darker indigo when pressed */
             transform: scale(0.98); /* Slightly shrink on press for visual feedback */
         }
 
@@ -339,10 +339,10 @@
 
         /* Spinner effect for the button when the 'spinning' class is applied */
         .round-button.spinning {
-            border-top-color: #4A4A4A; /* Dark grey top border */
+            border-top-color: #d1d5db; /* Dark grey top border */
             border-bottom-color: #4A4A4A; /* Dark grey bottom border */
             border-left-color: #4A4A4A; /* Light grey for left (Tailwind gray-300) */
-            border-right-color: #d1d5db; /* Light grey for right (Tailwind gray-300) */
+            border-right-color: #4A4A4A; /* Light grey for right (Tailwind gray-300) */
             animation: spin 0.5s linear infinite; /* Apply the spin animation */
         }
 
@@ -364,7 +364,7 @@
         .progress-bar {
             height: 100%; /* Take full height of its container */
             width: 0%; /* Initial width is 0% */
-            background-color: #6366F1; /* Indigo 500 as default fill color */
+            background-color: #b74304; /* Dark Orange */
             border-radius: 8px; /* Rounded corners for the fill */
             display: flex; /* Use flexbox to center text inside the bar */
             justify-content: center; /* Center text horizontally */
@@ -1002,7 +1002,6 @@ document.addEventListener('beforeunload', () => {
 	    else { // finger mode
 		loadingTitle.innerHTML = 'Scanning';	
 		loadingSpinner.style.visibility = 'hidden';
-		const loadingIntervalId = setInterval(scanProgressFunction, 100);
 	    }	
             // Request a wake lock when the prediction page is shown
             if ('wakeLock' in navigator) {
@@ -1027,11 +1026,7 @@ document.addEventListener('beforeunload', () => {
 
 
   
-                function scanProgressFunction() {
-		   scanProgress += 100;
-		   const progressPercentage = Math.min(100, Math.floor((scanProgress / (40 * 1000)) * 100));
-                   loadingProgressText.innerText = `Scan Progress: ${progressPercentage}%`;
-                }
+
 
 	
 	////////////////////////////////////
@@ -1071,28 +1066,11 @@ document.addEventListener('beforeunload', () => {
         // The actual messages array that will be used, with duplicates for longer display
         let actualScanMessages = [];
 
-        // --- Scan State Variables ---
-        let scanProgress = 0; // Tracks how many milliseconds the button has been held
-        let scanIntervalId = null; // ID for the main scan progress timer
-        let messageIntervalId = null; // ID for the scan message changer
-        let currentMessageIndex = 0;
-        let isScanning = false; // Flag to indicate if scan is truly active
-
 
         function loadingUpdateProgressBar() {
             // Set the width of the progress bar fill element
             loadingBar.style.width = `${loadingProgress}%`;
-            // Update the text content to show the current percentage, rounded
-            loadingBar.textContent = `${Math.round(loadingProgress)}%`;
-
-            // Optional: Change background color based on progress for a subtle visual effect
-            if (loadingProgress < 33) {
-                loadingBar.style.backgroundColor = '#6366F1'; // Indigo 500
-            } else if (loadingProgress < 66) {
-                loadingBar.style.backgroundColor = '#4F46E5'; // Indigo 600
-            } else {
-                loadingBar.style.backgroundColor = '#4338CA'; // Indigo 700
-            }
+	    loadingProgressText.textContent = `Progress: ${Math.round(loadingProgress)}%`;
         }
 
         /**
