@@ -428,7 +428,7 @@
 	<div id="loadingBarContainer" class="progress-bar-container">    
             <div id="loadingBar" class="progress-bar-fill"></div>
         </div>
-	<p id="loadingProgress">Scan Progress: 0%</p>
+	<p id="loadingProgressText">Scan Progress: 0%</p>
         <button id="loadingButton" class="round-button"></button>
         <div class="white-gap"></div> 			    
     </div>
@@ -662,11 +662,14 @@ document.addEventListener('DOMContentLoaded', function() {
 	const loadingSpinner      = document.getElementById('loadingSpinner');
 	const loadingBarContainer = document.getElementById('loadingBarContainer');	
 	const loadingBar          = document.getElementById('loadingBar');	
-	const loadingProgress     = document.getElementById('loadingProgress');
+	const loadingProgressText = document.getElementById('loadingProgressText');
 	const loadingButton       = document.getElementById('loadingButton');	
-	let   scanGoing           = false;
-	let   scanStarted         = false;
+        let loadingProgress = 0; // Current progress value (0-100)
+        let loadingIntervalId = null; // Stores the ID of the setInterval timer
+        const loadingProgressIncrement = 1; // How much progress increases per step
+        const loadingIntervalTime      = 20; // Milliseconds between each step (e.g., 20ms means 50 updates per second)
 
+	
         /* Add the contributors list */
         async function loadExternalHTML(url, targetElement) {
             try {
@@ -982,7 +985,10 @@ document.addEventListener('beforeunload', () => {
                     loadingTitle.innerHTML='Generating Prophecy...';	
 		    loadingText.innerHTML='Please wait, our algorithms are analyzing the cosmic data streams';
 		}
-	        loadingButton.style.visibility='hidden';	         		    
+	        loadingButton.style.visibility='hidden';
+                loadingBarContainer.style.visibility   = 'hidden';
+	        loadingBar.style.visibility            = 'hidden';
+	        loadingProgressText.style.visibility       = 'hidden';		    
                 // Set a timeout to display the prediction content after a delay
                 setTimeout(() => {
                     loadingScreen.style.display = 'none'; // Hide the loading screen
@@ -996,11 +1002,8 @@ document.addEventListener('beforeunload', () => {
 	    else { // finger mode
 		loadingTitle.innerHTML = 'Scanning';	
 		loadingSpinner.style.visibility = 'hidden';
-		const intervalId = setInterval(scanProgressFunction, 100);
-	    }
-	    loadingBarContainer.style.visibility   = 'hidden';
-	    loadingBar.style.visibility            = 'hidden';
-	    loadingProgress.style.visibility       = 'hidden';	
+		const loadingIntervalId = setInterval(scanProgressFunction, 100);
+	    }	
             // Request a wake lock when the prediction page is shown
             if ('wakeLock' in navigator) {
                 requestWakeLock();
@@ -1027,7 +1030,7 @@ document.addEventListener('beforeunload', () => {
                 function scanProgressFunction() {
 		   scanProgress += 100;
 		   const progressPercentage = Math.min(100, Math.floor((scanProgress / (40 * 1000)) * 100));
-                   loadingProgress.innerText = `Scan Progress: ${progressPercentage}%`;
+                   loadingProgressText.innerText = `Scan Progress: ${progressPercentage}%`;
                 }
 
 	
@@ -1075,6 +1078,97 @@ document.addEventListener('beforeunload', () => {
         let currentMessageIndex = 0;
         let isScanning = false; // Flag to indicate if scan is truly active
 
+
+        function updateProgressBar() {
+            // Set the width of the progress bar fill element
+            loadingBar.style.width = `${loadingProgress}%`;
+            // Update the text content to show the current percentage, rounded
+            loadingBar.textContent = `${Math.round(loadingProgress)}%`;
+
+            // Optional: Change background color based on progress for a subtle visual effect
+            if (loadingProgress < 33) {
+                loadingBar.style.backgroundColor = '#6366F1'; // Indigo 500
+            } else if (progress < 66) {
+                loadingBar.style.backgroundColor = '#4F46E5'; // Indigo 600
+            } else {
+                loadingBar.style.backgroundColor = '#4338CA'; // Indigo 700
+            }
+        }
+
+        /**
+         * Starts the progress bar animation and adds the spinning class to the button.
+         * Clears any existing interval and sets up a new one.
+         */
+        function loadingStartProgress() {
+            // If an interval is already running, clear it to prevent multiple timers
+            if (loadingIntervalId !== null) {
+                clearInterval(loadingIntervalId);
+            }
+
+            // If progress is already at 100%, reset to 0 to start over on a new press
+            if (loadingProgress >= 100) {
+                loadingProgress = 0;
+            }
+            loadingUpdateProgressBar(); // Update immediately to show current/reset progress
+
+            // Add the 'spinning' class to the button to activate the spinner effect
+            loadingButton.classList.add('spinning');
+
+            // Set up the interval to increment progress
+            loadingIntervalId = setInterval(() => {
+                if (loadingProgress < 100) {
+                    loadingProgress += loadingProgressIncrement; // Increase progress
+                    if (loadingProgress > 100) {
+                        loadingProgress = 100; // Cap progress at 100%
+                    }
+                    loadingUpdateProgressBar(); // Update the display
+                } else {
+                    // If 100% is reached, stop the interval
+                    clearInterval(loadingIntervalId);
+                    loadingIntervalId = null; // Reset loadingIntervalId
+                    // The progress will stay at 100% until the button is pressed again
+                    loadingButton.classList.remove('spinning'); // Stop spinning when complete
+                }
+            }, loadingIntervalTime);
+        }
+
+        /**
+         * Stops the progress bar animation and removes the spinning class from the button.
+         */
+        function loadingStopProgress() {
+            if (loadingIntervalId !== null) {
+                clearInterval(loadingIntervalId); // Stop the timer
+                loadingIntervalId = null; // Reset loadingIntervalId
+            }
+            // Remove the 'spinning' class from the button to stop the spinner effect
+            loadingButton.classList.remove('spinning');
+        }
+
+        // --- Event Listeners for Mouse (for desktop users) ---
+        // When the mouse button is pressed down on the round button
+        loadingButton.addEventListener('mousedown', loadingStartProgress);
+        // When the mouse button is released (anywhere after pressing the button)
+        loadingButton.addEventListener('mouseup', loadingStopProgress);
+        // Important: If the mouse cursor leaves the button while still pressed, stop progress
+        loadingButton.addEventListener('mouseleave', loadingStopProgress);
+
+        // --- Event Listeners for Touch (for mobile users) ---
+        // When a touch starts on the round button
+        loadingButton.addEventListener('touchstart', (event) => {
+            // Prevent default touch behaviors like scrolling or zooming, which can interfere
+            event.preventDefault();
+            loadingStartProgress();
+        }, { passive: false }); // Use { passive: false } to allow preventDefault
+
+        // When a touch ends (finger lifted)
+        loadingButton.addEventListener('touchend', loadingStopProgress);
+        // When a touch is interrupted (e.g., user gets a call, or finger slides off screen)
+        loadingButton.addEventListener('touchcancel', loadingStopProgress);
+
+        // Initialize the progress bar state when the page finishes loading
+        document.addEventListener('DOMContentLoaded', updateProgressBar);
+
+	
 
             // --- Functions ---
 
