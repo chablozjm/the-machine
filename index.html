@@ -1084,7 +1084,7 @@ document.addEventListener('beforeunload', () => {
 				       "Capybara", "Mole", "Octopus", "Sea Cucumber", "Manatee",
 				       "Wombat", "Armadillo", "Puffin", "Emu", "Hedgehog",
                                        "Tuna", "Otter", "Chinchilla", "Alpaca", "Lemur"];
-		loadingText.innerHTML = `Estimated brain volume: ${getRandomInt(1060,1499)} cm<sup>3</sup>.<br>Personality Type: ${FUNNY_ANIMALS[Math.floor(Math.random() * FUNNY_ANIMALS.length)]}`;				
+		loadingText.innerHTML = `Estimated brain volume: ${getRandomInt(1060,1499)} cm<sup>3</sup>.<br><strong>Personality Type: ${FUNNY_ANIMALS[Math.floor(Math.random() * FUNNY_ANIMALS.length)]}</strong>`;				
 	    }
 	    if (loadingProgress==48)
 		loadingText.innerHTML = `Analyzing goals and aspirations...`;		
@@ -1096,9 +1096,12 @@ document.addEventListener('beforeunload', () => {
 		loadingText.innerHTML = `Contact established.Successfull handshake with the brainstem confirmed`;
             if (loadingProgress==80)
 		loadingText.innerHTML = `Analyzing final destiny...`;
-            if (loadingProgress==88)
-		loadingText.innerHTML = `Please hold on as your soul is scanned`;  
-        }
+            if (loadingProgress==88) {
+		loadingText.classList.add('blink');
+		loadingText.innerHTML = `<strong>Please hold on as your soul is scanned</strong>`;  
+	    }
+	    if (loadingProgress==100)
+		loadingText.classList.remove('blink');
 
         /**
          * Starts the progress bar animation and adds the spinning class to the button.
