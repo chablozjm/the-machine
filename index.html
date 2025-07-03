@@ -921,12 +921,12 @@ document.addEventListener('beforeunload', () => {
                 }, 11*1000); // Use the defined delay
 	    }
 	    else { // finger mode
-		loadingTitle.innerHTML='Scanning';	    
+		loadingTitle.innerHTML = 'Scanning';	
+		loadingSpinner.style.visibility = 'hidden';
 		const intervalId = setInterval(scanProgressFunction, 100);
 	    }
 	    loadingBarContainer.style.visibility   = 'hidden';
 	    loadingBar.style.visibility            = 'hidden';
-	    loadingSpinner.style.visibility        = 'hidden';
 	    loadingProgress.style.visibility       = 'hidden';	
             // Request a wake lock when the prediction page is shown
             if ('wakeLock' in navigator) {
