@@ -269,14 +269,20 @@
             visibility: none; /* Hidden by default */
         }
 
+        .red {
+           color: #dc3545;
+	}
+	    
         /* Blinking class for messages */
         .blink {
-            animation: blink 0.8s infinite alternate;
+	    font-size: 1.5 em;
+	    font-weight: bold;
+            animation: blink 0.4s infinite alternate;
         }
 
         @keyframes blink {
             0% { opacity: 1; }
-            100% { opacity: 0.3; }
+            100% { opacity: 0.2; }
         }
 
 
@@ -1034,37 +1040,7 @@ document.addEventListener('beforeunload', () => {
         ////////////////////////////////////
 
 
-        // --- Configuration ---
-        const SCAN_DURATION_SECONDS = 56; // Adjusted to accommodate all messages + extended personality message
-        const TEXT_CHANGE_INTERVAL_MS = 4000; // How often scan message changes (4 seconds)
-        const FINAL_ANALYSIS_DELAY_MS = 5000; // Delay after scan completes before showing next page
-        const MIN_SCAN_DURATION_FOR_WARNING_MS = 500; // If released faster than this, no warning
 
-        // List of funny animals
-        const FUNNY_ANIMALS = [
-            "Sloth", "Platypus", "Pangolin", "Blobfish", "Tapir",
-            "Capybara", "Mole", "Octopus", "Sea Cucumber", "Manatee",
-            "Wombat", "Armadillo", "Puffin", "Emu", "Hedgehog",
-            "Tuna", "Otter", "Chinchilla", "Alpaca", "Lemur"
-        ];
-
-        // Updated and embellished scan messages
-        const SCAN_MESSAGES_TEMPLATE = [
-            "Establishing connection...",
-            "SUCCESS. Downloading memories...",
-            "Download Complete (DYNAMIC_GB_SIZE TBytes compressed).",
-            "Basic personality analysis started...",
-            "Estimated brain volume: DYNAMIC_BRAIN_VOLUME.<br>Personality Type: DYNAMIC_ANIMAL.",
-            "Analyzing goals and aspirations...",
-            "Assessing weaknesses and limitations...",
-            "Trying to establish contact with the deepest layers of the unconscious mind...",
-            "Contact established. Successful handshake with the brainstem confirmed.",
-            "Analyzing final destiny...", // 10
-            "Please hold on as your soul is scanned" // 11 (last, blinking)
-        ];
-
-        // The actual messages array that will be used, with duplicates for longer display
-        let actualScanMessages = [];
 
 
         function loadingUpdateProgressBar() {
@@ -1091,9 +1067,9 @@ document.addEventListener('beforeunload', () => {
 	    if (loadingProgress==56)
 		loadingText.innerHTML = `Assessing weaknesses and limitations...`;		
 	    if (loadingProgress==64)
-		loadingText.innerHTML = `Trying to establish contact with the deepest layers of the unconscious mind...`;
+		loadingText.innerHTML = `Contacting the deepest layers of the unconscious mind...`;
 	    if (loadingProgress==72)
-		loadingText.innerHTML = `Contact established.Successfull handshake with the brainstem confirmed`;
+		loadingText.innerHTML = `Brainstem to server connection confirmed`;
             if (loadingProgress==80)
 		loadingText.innerHTML = `Analyzing final destiny...`;
             if (loadingProgress==88) {
