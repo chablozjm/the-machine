@@ -1072,20 +1072,32 @@ document.addEventListener('beforeunload', () => {
             loadingBar.style.width = `${loadingProgress}%`;
 	    loadingProgressText.textContent = `Scan Progress: ${Math.round(loadingProgress)}%`;
 	    if (loadingProgress==0)
-		loadingText.textContent = `Establishing connection...`;
-	    if (loadingProgress==10)
-		loadingText.textContent = `SUCESS. Downloading Memories...`;	
-            if (loadingProgress==20)
-		loadingText.textContent = `Download complete ( ${getRandomFloat(80.0, 99.9, 1).toFixed(1)} TBytes compressed)`;
-            if (loadingProgress==30)
-		loadingText.textContent = `Basic personality analysis started...`;		
-            if (loadingProgress==40)
-		loadingText.textContent = `Estimated brain volume: ${getRandomInt(1060,1499)} cm<sup>3</sup>.<br>Personality Type: Mouse`;				
-	    if (loadingProgress==60)
-		loadingText.textContent = `Analyzing goals and aspirations...`;		
-	    if (loadingProgress==70)
-		loadingText.textContent = `Assessing weaknesses and limitations...`;		
-	    
+		loadingText.innerHTML = `Establishing connection...`;
+	    if (loadingProgress==8)
+		loadingText.innerHTML = `SUCESS. Downloading Memories...`;	
+            if (loadingProgress==16)
+		loadingText.innerHTML = `Download complete ( ${getRandomFloat(80.0, 99.9, 1).toFixed(1)} TBytes compressed)`;
+            if (loadingProgress==24)
+		loadingText.innerHTML = `Basic personality analysis started...`;		
+            if (loadingProgress==32) {
+		const FUNNY_ANIMALS = ["Sloth", "Platypus", "Pangolin", "Blobfish", "Tapir",
+				       "Capybara", "Mole", "Octopus", "Sea Cucumber", "Manatee",
+				       "Wombat", "Armadillo", "Puffin", "Emu", "Hedgehog",
+                                       "Tuna", "Otter", "Chinchilla", "Alpaca", "Lemur"];
+		loadingText.innerHTML = `Estimated brain volume: ${getRandomInt(1060,1499)} cm<sup>3</sup>.<br>Personality Type: ${FUNNY_ANIMALS[Math.floor(Math.random() * FUNNY_ANIMALS.length)]}`;				
+	    }
+	    if (loadingProgress==48)
+		loadingText.innerHTML = `Analyzing goals and aspirations...`;		
+	    if (loadingProgress==56)
+		loadingText.innerHTML = `Assessing weaknesses and limitations...`;		
+	    if (loadingProgress==64)
+		loadingText.innerHTML = `Trying to establish contact with the deepest layers of the unconscious mind...`;
+	    if (loadingProgress==72)
+		loadingText.innerHTML = `Contact established.Successfull handshake with the brainstem confirmed`;
+            if (loadingProgress==80)
+		loadingText.innerHTML = `Analyzing final destiny...`;
+            if (loadingProgress==88)
+		loadingText.innerHTML = `Please hold on as your soul is scanned`;  
         }
 
         /**
