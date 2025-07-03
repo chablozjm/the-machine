@@ -863,6 +863,7 @@ document.addEventListener('beforeunload', () => {
 
             // --- Parse for "Serious Mode" (s) ---
             if (modifierString.includes('s')) {
+		seriousMode = true;
                 funnyStats.style.display="none";                
                 modifierString = modifierString.replace('s', ''); // Remove 's' to easily find numbers
             }
