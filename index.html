@@ -454,7 +454,7 @@
 	<p>Timers! For the first three reveals, every time that the spectator announces their pick, you either let them scroll down immediateley to the next reveal, or you talk for a while and delay the scrolling. After a 20 seconds delay, the text on the reveal changes.</p>
 	<p>The last reveal, in which they do not even announce their choice out loud, is based on the combination of a timer, clever wording and multiple outs. When the spectator scrolls down to the fourth reveal, it might or might not match their choice. If it matches, a clever psychological trick will make the spectator stop scrolling until all what comes after the reveal is deleted by a timer expiration. If it does not match, you ask them to just continue scrolling, and they will discover that, actually, what they thought was a wrong reveal was just a part of a longer reveal, that ultimately matches their choice.</p>
         <h3>Question: What is the password to activate the machine?</h3>	    
-	<p>The password is <strong>cigamcmj</strong>. It is case-insensitive, so it doesn't matter whether or not some or all letters are written in capitals. The password is "jmc magic" written backwards, so you can remember it easily. You should not tell this to your audience, though. Just tell them the letters, one by one, and let them enter them in the password field.</p>
+	<p>The password is <strong>cgmcmj</strong>. It is case-insensitive, so it doesn't matter whether or not some or all letters are written in capitals. The password is "jmc magic" written backwards, so you can remember it easily. You should not tell this to your audience, though. Just tell them the letters, one by one, and let them enter them in the password field.</p>
 <p>Basically, the reason there is a password system on the page is to prevent the spectator from reloading the page and generating their predictions once your performance is finished. And that is also the reason why the password is complex: if the password was a simple word, like "future", it would be easy for the spectator to remember it. After your performance, they would be able to reload the page, generate a new prediction, and gain a significant, even if uncomplete, insight on how this trick works.</p>
 	<p>By asking the spectator to add letters and numbers at the end of the password, you can add a few modifiers that change some parameters of the trick to better suit different performers. This is discussed in section XXXXXXXX</p>
 	<h3>Question: can anyone use this trick for free?</h3>
@@ -536,7 +536,7 @@
 document.addEventListener('DOMContentLoaded', function() {
 	    
         // --- Configuration ---
-        const BASE_PASSWORD = 'cigamcmj';        
+        const BASE_PASSWORD = 'cgmcmj';        
         let delayTime = 20 * 1000;	    
 
         // --- Get DOM Elements ---
@@ -549,8 +549,6 @@ document.addEventListener('DOMContentLoaded', function() {
         const errorMessage = document.getElementById('errorMessage');        
         
         /* serious mode*/
-        const generatingProphecy = document.getElementById('generatingProphecy');
-        const cosmicDataStreams = document.getElementById('cosmicDataStreams');
         const funnyStats = document.getElementById('funnyStats');            
         const crystalBallsSpan = document.getElementById('crystalBalls');
         const teaLeavesSpan = document.getElementById('teaLeaves');
@@ -865,8 +863,6 @@ document.addEventListener('beforeunload', () => {
 
             // --- Parse for "Serious Mode" (s) ---
             if (modifierString.includes('s')) {
-                generatingProphecy.innerHTML='Generating Prediction';
-                cosmicDataStreams.style.display="none";
                 funnyStats.style.display="none";                
                 modifierString = modifierString.replace('s', ''); // Remove 's' to easily find numbers
             }
