@@ -1076,7 +1076,16 @@ document.addEventListener('beforeunload', () => {
 	    if (loadingProgress==10)
 		loadingText.textContent = `SUCESS. Downloading Memories...`;	
             if (loadingProgress==20)
-		loadingText.textContent = `Download complete ( $(getRandomFloat(80.0, 99.9, 1).toFixed(1)) TBytes compressed)`;			
+		loadingText.textContent = `Download complete ( ${getRandomFloat(80.0, 99.9, 1).toFixed(1)} TBytes compressed)`;
+            if (loadingProgress==30)
+		loadingText.textContent = `Basic personality analysis started...`;		
+            if (loadingProgress==40)
+		loadingText.textContent = `Estimated brain volume: ${getRandomInt(1060,1499)} cm<sup>3</sup>.<br>Personality Type: Mouse`;				
+	    if (loadingProgress==60)
+		loadingText.textContent = `Analyzing goals and aspirations...`;		
+	    if (loadingProgress==70)
+		loadingText.textContent = `Assessing weaknesses and limitations...`;		
+	    
         }
 
         /**
