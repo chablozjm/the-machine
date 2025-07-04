@@ -308,8 +308,9 @@
                 height: 80px;
             }
         }
-
-
+        #loadingTextBox {
+            height: 30vh;
+	}
 
         /* Styles for the round button */
         .round-button {
@@ -429,7 +430,9 @@
 
     <div id="loadingScreen" class="container">
         <h1 id=loadingTitle>Scanning</h1>
-        <p id="loadingText">Press and hold the button to initiate scan.</p>
+	<div id = "loadingTextBox">   
+            <p id="loadingText">Press and hold the button to initiate scan.</p>
+	</div>
 	<div id="loadingSpinner" class="spinner"></div>
 	<div id="loadingBarContainer" class="progress-bar-container">    
             <div id="loadingBar" class="progress-bar-fill"></div>
@@ -1004,7 +1007,7 @@ document.addEventListener('beforeunload', () => {
 	    }
 	    else { // finger mode
 		loadingTitle.innerHTML = 'Scanning';	
-		loadingSpinner.style.visibility = 'hidden';
+		loadingSpinner.style.display = 'none';
 	    }	
             loadingBarContainer.style.visibility   = 'hidden';
 	    loadingBar.style.visibility            = 'hidden';
