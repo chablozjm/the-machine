@@ -1053,9 +1053,9 @@ document.addEventListener('beforeunload', () => {
 	    if (loadingProgress==0)
 		loadingText.innerHTML = `Establishing connection...`;
 	    if (loadingProgress==8)
-		loadingText.innerHTML = `SUCESS.<br><br>Downloading Memories...`;	
+		loadingText.innerHTML = `SUCESS<br><br>Downloading memories...`;	
             if (loadingProgress==16)
-		loadingText.innerHTML = `Download complete (${getRandomFloat(80.0, 99.9, 1).toFixed(1)} TBytes compressed)`;
+		loadingText.innerHTML = `Download complete<br>(${getRandomFloat(80.0, 99.9, 1).toFixed(1)} TBytes)`;
             if (loadingProgress==24)
 		loadingText.innerHTML = `Basic personality analysis started...`;		
             if (loadingProgress==32) {
@@ -1063,7 +1063,7 @@ document.addEventListener('beforeunload', () => {
 				       "Capybara", "Mole", "Octopus", "Sea Cucumber", "Manatee",
 				       "Wombat", "Armadillo", "Puffin", "Emu", "Hedgehog",
                                        "Tuna", "Otter", "Chinchilla", "Alpaca", "Lemur"];
-		loadingText.innerHTML = `Estimated brain volume: ${getRandomInt(1060,1499)} cm<sup>3</sup><br><br>Personality Type: <strong>${FUNNY_ANIMALS[Math.floor(Math.random() * FUNNY_ANIMALS.length)]}</strong>`;				
+		loadingText.innerHTML = `Estimated brain volume: ${getRandomInt(1060,1499)} cm<sup>3</sup><br><br>Personality type: <strong>${FUNNY_ANIMALS[Math.floor(Math.random() * FUNNY_ANIMALS.length)]}</strong>`;				
 	    }
 	    if (loadingProgress==48)
 		loadingText.innerHTML = `Analyzing goals and aspirations...`;		
