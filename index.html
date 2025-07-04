@@ -1070,17 +1070,26 @@ document.addEventListener('beforeunload', () => {
 	    if (loadingProgress==56)
 		loadingText.innerHTML = `Assessing weaknesses and limitations...`;		
 	    if (loadingProgress==64)
-		loadingText.innerHTML = `Contacting the deepest layers of the unconscious mind...`;
+		loadingText.innerHTML = `Contacting the deepest layers of the unconscious mind`;
 	    if (loadingProgress==72)
-		loadingText.innerHTML = `Brainstem-to-server connection confirmed`;
+		loadingText.innerHTML = `Brainstem-to-Server connection confirmed`;
             if (loadingProgress==80)
 		loadingText.innerHTML = `Analyzing final destiny...`;
             if (loadingProgress==88) {
 		loadingText.classList.add('blink');
 		loadingText.innerHTML = `<strong>Please hold on as your soul is scanned</strong>`;  
 	    }
-	    if (loadingProgress==100)
+	    if (loadingProgress==100) {
 		loadingText.classList.remove('blink');
+		loadingScreen.style.display = 'none'; // Hide the loading screen
+		nrOfSecondsSpan.textContent = `${getRandomFloat(50.00, 59.99, 2).toFixed(2)}`;
+		funnyStats.style.display = 'none';    
+                predictionContent.style.display = 'block'; // Show the prediction content
+	        window.scrollTo({ top: 0, behavior: 'auto' });
+                document.body.style.overflow = '';
+                // Request a wake lock when the prediction page is shown
+                requestWakeLock();
+	    }
 	}
 
         /**
@@ -1158,87 +1167,6 @@ document.addEventListener('beforeunload', () => {
 
         // Initialize the progress bar state when the page finishes loading
         document.addEventListener('DOMContentLoaded', loadingUpdateProgressBar);
-
-	
-
-            // --- Functions ---
-
-            /**
-             * Helper function to prepare messages including dynamic and extended display.
-             * This is called once at the start of a scan.
-             */
-            function prepareScanMessages() {
-                actualScanMessages = [];
-                const randomTB = getRandomFloat(80.0, 99.9, 1).toFixed(1);
-		const randomVolume = getRandomInt(1060, 1499);
-                const randomAnimal = FUNNY_ANIMALS[Math.floor(Math.random() * FUNNY_ANIMALS.length)];
-
-                SCAN_MESSAGES_TEMPLATE.forEach((msg, index) => {
-                    let processedMsg = msg;
-                    if (index === 2) { // GB Size message
-                        processedMsg = `Complete (${randomTB} GB compressed).`;
-                    } else if (index === 4) { // Personality Type message
-                        processedMsg = `Estimated brain volume: <strong>${randomVolume} cm<sup>3</sup></strong><br>Personality Type: <strong>${randomAnimal}</strong>.`;
-                    }
-
-                    actualScanMessages.push(processedMsg);
-
-                    // Duplicate the personality message to make it stay longer (e.g., 3 times the normal duration)
-                    if (index === 4) {
-                        actualScanMessages.push(processedMsg); // Duplicate once
-                    }
-                });
-            }
-
-
-
-
-
-	
-
-            /**
-             * Updates the scan message text and handles the longer last message.
-             */
-            function updateScanMessage() {
-                // Ensure currentMessageIndex does not exceed array bounds
-                if (currentMessageIndex >= actualScanMessages.length) {
-                    currentMessageIndex = actualScanMessages.length - 1; // Cap it at the last message
-                }
-
-                loadingText.innerHTML = actualScanMessages[currentMessageIndex]; // Use innerHTML for bolding
-
-                // If it's the very last message in the *actual* sequence, add the blinking class
-                if (currentMessageIndex === actualScanMessages.length - 1) {
-                    loadingText.classList.add('blink');
-                } else {
-                    loadingText.classList.remove('blink');
-                }
-
-                // Increment index for the next message
-                currentMessageIndex++;
-            }
-
-            /**
-             * Starts the scanning process when the scan button is pressed.
-             */
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 	
 });
     </script>
